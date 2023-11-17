@@ -57,8 +57,30 @@ const updateCustomer = (req,resp) =>{
 
 }
 const deleteCustomer = (req,resp) =>{
-   
+   Customer.deleteOne({nic:req.headers.nic})
+   .then(result,()=>{
+      if(result.deleteCount>0){
+         resp.status(204).json({status:true, message:'Customer was Deleted'})
+      }else{
+         resp.status(400).json({status:false, message:'try again'})
+      }
+   }).catch(error,()=>{
+      resp.status(500).json(error)
+   })
 }
 const findAllCustomer = (req,resp) =>{
+   Customer.find()
+   .then(result,()=>{
+      resp.status(200).json({status:true, data:result})
+   }).catch(error,()=>{
+      resp.status(500).json(error)
+   })
+}
 
+module.exports = {
+   saveCustomer,
+   findCustomer,
+   updateCustomer,
+   deleteCustomer,
+   findAllCustomer
 }
