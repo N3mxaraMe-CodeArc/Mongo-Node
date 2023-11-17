@@ -1,0 +1,1 @@
+const Customer = require('../Model/CustomerScheama');
