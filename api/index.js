@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const CustomerRoute = require('./routes/CustomerRoute')
+const UserRoute = require('./routes/UserRoute')
 
 
 mongoose.connect('mongodb://localhost:27017/customer_crud')
@@ -20,3 +21,4 @@ mongoose.connect('mongodb://localhost:27017/customer_crud')
   });
 
 app.use(`./api/v1/customers`, CustomerRoute);
+app.use(`./api/v1/users`, UserRoute);
