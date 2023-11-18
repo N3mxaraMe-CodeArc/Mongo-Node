@@ -45,18 +45,22 @@ const login = async (req,resp) =>{
             message:'User not found'
          })
       }else{
-         if(result.password==req.params.password){
-            resp.status(200).json({
-               status:true,
-               message:'User found',
-               result:result
-            })
-         }else{
-            resp.status(401).json({
-               status:false,
-               message:'Invalid password'
-            })
-         }
+         bcrypt.compare(req.body.password,result.password,function(err,hash){
+            if(err){
+               return resp.status(401).json({
+                  message:'Auth failed'
+               })
+            }
+            if(result){
+               return resp.status(200).json({
+                  token:'token data'
+               })
+            }else{
+               return resp.status(401).json({
+                  message:'Auth failed'
+               })
+            }
+         })
       }
    }).catch(error=>{
       resp.status(500).json(error)
